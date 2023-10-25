@@ -532,5 +532,23 @@ namespace UnityEditor.U2D.Sprites
                 spriteEditor.SetDataModified();
             }
         }
+
+        public bool IsOnlyUsingDefaultNamedSpriteRects()
+        {
+            var onlyDefaultNames = true;
+            var names = m_RectsCache.spriteNames;
+            var defaultName = m_SpriteNameStringBuilder.ToString();
+
+            foreach (var name in names)
+            {
+                if (!name.Contains(defaultName))
+                {
+                    onlyDefaultNames = false;
+                    break;
+                }
+            }
+
+            return onlyDefaultNames;
+        }
     }
 }

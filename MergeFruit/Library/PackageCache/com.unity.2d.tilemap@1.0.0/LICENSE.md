@@ -1,4 +1,4 @@
-com.unity.2d.tilemap copyright © 2019 Unity Technologies
+com.unity.2d.tilemap copyright © 2019 Unity Technologies ApS
 
 Licensed under the Unity Package Distribution License (see https://unity3d.com/legal/licenses/Unity_Package_Distribution_License ).
 

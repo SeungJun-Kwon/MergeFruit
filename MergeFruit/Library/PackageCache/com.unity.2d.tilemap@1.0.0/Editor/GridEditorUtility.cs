@@ -250,12 +250,12 @@ namespace UnityEditor.Tilemaps
             int right = horizontalCount;
             Vector3[] cellOffset =
             {
-                Grid.Swizzle(gridLayout.cellSwizzle, new Vector3(0, gridLayout.cellSize.y / 2, area.zMin)),
-                Grid.Swizzle(gridLayout.cellSwizzle, new Vector3(gridLayout.cellSize.x / 2, gridLayout.cellSize.y / 4, area.zMin)),
-                Grid.Swizzle(gridLayout.cellSwizzle, new Vector3(gridLayout.cellSize.x / 2, -gridLayout.cellSize.y / 4, area.zMin)),
-                Grid.Swizzle(gridLayout.cellSwizzle, new Vector3(0, -gridLayout.cellSize.y / 2, area.zMin)),
-                Grid.Swizzle(gridLayout.cellSwizzle, new Vector3(-gridLayout.cellSize.x / 2, -gridLayout.cellSize.y / 4, area.zMin)),
-                Grid.Swizzle(gridLayout.cellSwizzle, new Vector3(-gridLayout.cellSize.x / 2, gridLayout.cellSize.y / 4, area.zMin))
+                Grid.Swizzle(gridLayout.cellSwizzle, new Vector3(0, gridLayout.cellSize.y / 2, 0)),
+                Grid.Swizzle(gridLayout.cellSwizzle, new Vector3(gridLayout.cellSize.x / 2, gridLayout.cellSize.y / 4, 0)),
+                Grid.Swizzle(gridLayout.cellSwizzle, new Vector3(gridLayout.cellSize.x / 2, -gridLayout.cellSize.y / 4, 0)),
+                Grid.Swizzle(gridLayout.cellSwizzle, new Vector3(0, -gridLayout.cellSize.y / 2, 0)),
+                Grid.Swizzle(gridLayout.cellSwizzle, new Vector3(-gridLayout.cellSize.x / 2, -gridLayout.cellSize.y / 4, 0)),
+                Grid.Swizzle(gridLayout.cellSwizzle, new Vector3(-gridLayout.cellSize.x / 2, gridLayout.cellSize.y / 4, 0))
             };
             // Fill Top and Bottom Vertices
             for (int x = area.min.x; x < area.max.x; x++)

@@ -335,9 +335,8 @@ namespace UnityEditor.Tilemaps
 
         public static List<TileBase> ConvertToTileSheet(Dictionary<Vector2Int, TileDragAndDropHoverData> sheet)
         {
-            List<TileBase> result = new List<TileBase>();
-
-            string defaultPath = TileDragAndDropManager.GetDefaultTileAssetPath();
+            var result = new List<TileBase>();
+            var defaultPath = TileDragAndDropManager.GetDefaultTileAssetDirectoryPath();
 
             // Early out if all objects are already tiles
             if (sheet.Values.ToList().FindAll(data => data.hoverObject is TileBase).Count == sheet.Values.Count)
@@ -408,7 +407,7 @@ namespace UnityEditor.Tilemaps
                 // Do not check if this will overwrite new tile as user has explicitly selected the file to save to
                 path = EditorUtility.SaveFilePanelInProject("Generate new tile", sheet.Values.First().hoverObject.name, k_TileExtension, "Generate new tile", defaultPath);
             }
-            TileDragAndDropManager.SetUserTileAssetPath(path);
+            TileDragAndDropManager.SetUserTileAssetDirectoryPath(path);
 
             if (string.IsNullOrEmpty(path))
                 return result;
@@ -417,6 +416,7 @@ namespace UnityEditor.Tilemaps
             uniqueNames.Clear();
             EditorUtility.DisplayProgressBar("Generating Tile Assets (" + i + "/" + sheet.Count + ")", "Generating tiles", 0f);
 
+            AssetDatabase.StartAssetEditing();
             try
             {
                 MethodInfo createTileMethod = GridPaintActiveTargetsPreferences.GetCreateTileFromPaletteUsingPreferences();
@@ -479,6 +479,7 @@ namespace UnityEditor.Tilemaps
             }
             finally
             {
+                AssetDatabase.StopAssetEditing();
                 EditorUtility.ClearProgressBar();
             }
 
@@ -486,15 +487,23 @@ namespace UnityEditor.Tilemaps
             return result;
         }
 
-        internal static RectInt GetMinMaxRect(List<Vector2Int> positions)
+        internal static RectInt GetMinMaxRect(IEnumerable<Vector2Int> positions)
         {
-            if (positions == null || positions.Count == 0)
+            if (positions == null)
                 return new RectInt();
 
-            return GridEditorUtility.GetMarqueeRect(
-                new Vector2Int(positions.Min(p1 => p1.x), positions.Min(p1 => p1.y)),
-                new Vector2Int(positions.Max(p1 => p1.x), positions.Max(p1 => p1.y))
-            );
+            var hasValue = false;
+            var min = new Vector2Int(Int32.MaxValue, Int32.MaxValue);
+            var max = new Vector2Int(Int32.MinValue, Int32.MinValue);
+            foreach (var position in positions)
+            {
+                min.x = Math.Min(min.x, position.x);
+                max.x = Math.Max(max.x, position.x);
+                min.y = Math.Min(min.y, position.y);
+                max.y = Math.Max(max.y, position.y);
+                hasValue = true;
+            }
+            return hasValue ? GridEditorUtility.GetMarqueeRect(min, max) : new RectInt();
         }
     }
 }

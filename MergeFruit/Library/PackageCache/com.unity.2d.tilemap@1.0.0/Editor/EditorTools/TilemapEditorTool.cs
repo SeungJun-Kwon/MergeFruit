@@ -17,6 +17,9 @@ namespace UnityEditor.Tilemaps
         /// </summary>
         public class ShortcutContext : IShortcutToolContext
         {
+            /// <summary>
+            /// Returns whether the ShortcutContext is active or not.
+            /// </summary>
             public bool active { get; set; }
         }
 
@@ -53,6 +56,7 @@ namespace UnityEditor.Tilemaps
         /// <summary>
         /// The horizontal size of a Toolbar with all the TilemapEditorTools
         /// </summary>
+        [Obsolete]
         public static float tilemapEditorToolsToolbarSize
         {
             get
@@ -122,7 +126,16 @@ namespace UnityEditor.Tilemaps
         /// <returns>Whether the tool is available for use</returns>
         public override bool IsAvailable()
         {
-            return (GridPaintPaletteWindow.instances.Count > 0) && GridPaintingState.gridBrush;
+            return (GridPaintingState.isEditing) && GridPaintingState.gridBrush;
+        }
+
+        /// <summary>
+        /// Callback when a TilemapEditorTool is activated
+        /// </summary>
+        public override void OnActivated()
+        {
+            //if (ToolManager.activeContextType != typeof(GridSelectionToolContext))
+            //    ToolManager.SetActiveContext<GridSelectionToolContext>();
         }
 
         internal static void UpdateTooltips()
@@ -230,7 +243,7 @@ namespace UnityEditor.Tilemaps
                     var toolType = brushToolsAttribute.toolList[i];
                     if (!s_TilemapEditorToolsMap.TryGetValue(toolType, out EditorTool editorTool))
                     {
-                        editorTool = (EditorTool)ScriptableObject.CreateInstance(toolType);
+                        editorTool = (EditorTool)CreateInstance(toolType);
                         s_TilemapEditorToolsMap.Add(toolType, editorTool);
                     }
                     editorTools[i] = editorTool;

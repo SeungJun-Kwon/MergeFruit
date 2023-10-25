@@ -38,6 +38,8 @@ namespace UnityEditor.Tilemaps
             return instance.CreateDefaultTilemapEditorTools();
         }
 
+        internal static event Action tilemapEditorToolsChanged;
+
         private ReorderableList m_DefaultTypes;
         private ReorderableList m_OtherTypes;
         private bool m_Changed;
@@ -76,7 +78,7 @@ namespace UnityEditor.Tilemaps
             }
         }
 
-        internal void LoadDefaultEditorToolTypes()
+        private void LoadDefaultEditorToolTypes()
         {
             InitializeAllTilemapEditorToolTypes();
 
@@ -155,15 +157,9 @@ namespace UnityEditor.Tilemaps
             return s_DefaultTilemapEditorTools;
         }
 
-        internal void ClearExistingDefaultTilemapEditorTools()
+        internal void UpdateTilemapEditorToolsChange()
         {
-            if (s_DefaultTilemapEditorTools == null)
-                return;
-
-            for (int i = 0; i < s_DefaultTilemapEditorTools.Length; ++i)
-            {
-                s_DefaultTilemapEditorTools[i] = null;
-            }
+            tilemapEditorToolsChanged?.Invoke();
         }
 
         private void OnDrawDefaultElement(Rect rect, int i, bool isactive, bool isfocused)
@@ -267,8 +263,7 @@ namespace UnityEditor.Tilemaps
             {
                 if (GUILayout.Button(TilemapEditorToolProperties.saveLabel))
                 {
-                    SaveTilemapEditorToolPreferencesAsset(m_DefaultTilemapEditorToolTypes);
-                    ClearExistingDefaultTilemapEditorTools();
+                    SaveTilemapEditorToolPreferences(m_DefaultTilemapEditorToolTypes);
                     m_Changed = false;
                     GridPaintingState.RepaintGridPaintPaletteWindow();
                 }
@@ -282,9 +277,7 @@ namespace UnityEditor.Tilemaps
             }
             if (GUILayout.Button(TilemapEditorToolProperties.resetLabel))
             {
-                DeleteTilemapEditorToolPreferencesAsset();
-                ClearExistingDefaultTilemapEditorTools();
-                LoadDefaultEditorToolTypes();
+                ResetTilemapEditorToolPreferences();
                 m_DefaultTypes.index = -1;
                 m_OtherTypes.index = -1;
                 m_Changed = false;
@@ -293,7 +286,25 @@ namespace UnityEditor.Tilemaps
             EditorGUILayout.EndHorizontal();
         }
 
-        internal void DeleteTilemapEditorToolPreferencesAsset()
+        internal void SaveTilemapEditorToolPreferences(List<DefaultTilemapEditorTool> defaultTools)
+        {
+            SaveTilemapEditorToolPreferencesAsset(defaultTools);
+            ClearExistingDefaultTilemapEditorTools();
+            LoadDefaultEditorToolTypes();
+            DeactivateToolIfNotInDefault();
+            UpdateTilemapEditorToolsChange();
+        }
+
+        internal void ResetTilemapEditorToolPreferences()
+        {
+            DeleteTilemapEditorToolPreferencesAsset();
+            ClearExistingDefaultTilemapEditorTools();
+            LoadDefaultEditorToolTypes();
+            DeactivateToolIfNotInDefault();
+            UpdateTilemapEditorToolsChange();
+        }
+
+        private static void DeleteTilemapEditorToolPreferencesAsset()
         {
             if (File.Exists(s_AssetPath))
             {
@@ -301,7 +312,7 @@ namespace UnityEditor.Tilemaps
             }
         }
 
-        internal void SaveTilemapEditorToolPreferencesAsset(List<DefaultTilemapEditorTool> defaultTools)
+        private static void SaveTilemapEditorToolPreferencesAsset(List<DefaultTilemapEditorTool> defaultTools)
         {
             if (defaultTools == null)
                 return;
@@ -325,7 +336,18 @@ namespace UnityEditor.Tilemaps
             InternalEditorUtility.SaveToSerializedFileAndForget(new Object[] { saveAsset }, s_AssetPath, true);
         }
 
-        internal List<DefaultTilemapEditorTool> LoadTilemapEditorToolPreferencesAsset()
+        private static void ClearExistingDefaultTilemapEditorTools()
+        {
+            if (s_DefaultTilemapEditorTools == null)
+                return;
+
+            for (int i = 0; i < s_DefaultTilemapEditorTools.Length; ++i)
+            {
+                s_DefaultTilemapEditorTools[i] = null;
+            }
+        }
+
+        private List<DefaultTilemapEditorTool> LoadTilemapEditorToolPreferencesAsset()
         {
             if (!File.Exists(s_AssetPath))
                 return null;
@@ -338,6 +360,27 @@ namespace UnityEditor.Tilemaps
                     return defaultTools.m_UserDefaultTools;
             }
             return null;
+        }
+
+        private void DeactivateToolIfNotInDefault()
+        {
+            var activeToolType = ToolManager.activeToolType;
+            if (activeToolType == null ||
+                !activeToolType.IsSubclassOf(typeof(TilemapEditorTool)))
+            {
+                return;
+            }
+
+            if (s_DefaultTilemapEditorTools == null || s_DefaultTilemapEditorTools[0] == null)
+                CreateDefaultTilemapEditorTools();
+
+            foreach (var defaultToolType in s_DefaultTilemapEditorTools)
+            {
+                if (activeToolType == defaultToolType.GetType())
+                    return;
+            }
+
+            ToolManager.SetActiveTool(typeof(ViewModeTool));
         }
     }
 }

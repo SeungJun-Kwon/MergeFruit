@@ -230,8 +230,6 @@ namespace UnityEditor.U2D.Sprites
             public static readonly GUIContent revertButtonLabel = EditorGUIUtility.TrTextContent("Revert");
             public static readonly GUIContent applyButtonLabel = EditorGUIUtility.TrTextContent("Apply");
 
-            public static readonly GUIContent spriteEditorWindowTitle = EditorGUIUtility.TrTextContent("Sprite Editor");
-
             public static readonly GUIContent pendingChangesDialogContent = EditorGUIUtility.TrTextContent("The asset was modified outside of Sprite Editor Window.\nDo you want to apply pending changes?");
 
             public static readonly GUIContent applyRevertDialogTitle = EditorGUIUtility.TrTextContent("Unapplied import settings");
@@ -501,14 +499,15 @@ namespace UnityEditor.U2D.Sprites
 
         void OnEnable()
         {
-            this.name = "SpriteEditorWindow";
+            name = "SpriteEditorWindow";
+            titleContent = EditorGUIUtility.TrTextContentWithIcon(L10n.Tr("Sprite Editor"), "Packages/com.unity.2d.sprite/Editor/Assets/SpriteEditor.png");
             selectedObject = Selection.activeObject;
             minSize = new Vector2(360, 200);
-            titleContent = SpriteEditorWindowStyles.spriteEditorWindowTitle;
             m_UndoSystem.RegisterUndoCallback(UndoRedoPerformed);
             EditorApplication.modifierKeysChanged += ModifierKeysChanged;
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
             EditorApplication.quitting += OnEditorApplicationQuit;
+            AssemblyReloadEvents.beforeAssemblyReload += OnBeforeAssemblyReload;
 
             if (selectedProviderChanged)
                 selectedAssetPath = GetSelectionAssetPath();
@@ -611,6 +610,7 @@ namespace UnityEditor.U2D.Sprites
             EditorApplication.modifierKeysChanged -= ModifierKeysChanged;
             EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
             EditorApplication.quitting -= OnEditorApplicationQuit;
+            AssemblyReloadEvents.beforeAssemblyReload -= OnBeforeAssemblyReload;
 
             if (m_OutlineTexture != null)
             {
@@ -648,6 +648,12 @@ namespace UnityEditor.U2D.Sprites
                 String.Format(SpriteEditorWindowStyles.applyRevertDialogContent.text, selectedAssetPath));
         }
 
+        void OnBeforeAssemblyReload()
+        {
+            HandleApplyRevertDialog(SpriteEditorWindowStyles.applyRevertDialogTitle.text,
+                String.Format(SpriteEditorWindowStyles.applyRevertDialogContent.text, selectedAssetPath));
+        }
+        
         static bool ShowHandleApplyRevertDialog(string dialogTitle, string dialogContent)
         {
             return EditorUtility.DisplayDialog(dialogTitle, dialogContent,

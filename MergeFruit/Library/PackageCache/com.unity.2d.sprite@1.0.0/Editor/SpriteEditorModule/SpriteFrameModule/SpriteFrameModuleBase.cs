@@ -266,6 +266,12 @@ namespace UnityEditor.U2D.Sprites
 
     internal abstract partial class SpriteFrameModuleBase : SpriteEditorModuleBase
     {
+        [Serializable]
+        internal class SpriteFrameModulePersistentState : ScriptableSingleton<SpriteFrameModulePersistentState>
+        {
+            public PivotUnitMode pivotUnitMode = PivotUnitMode.Normalized;
+        }
+
         protected SpriteRectModel m_RectsCache;
         protected ITextureDataProvider m_TextureDataProvider;
         protected ISpriteEditorDataProvider m_SpriteDataProvider;
@@ -278,7 +284,11 @@ namespace UnityEditor.U2D.Sprites
             Pixels
         }
 
-        private PivotUnitMode m_PivotUnitMode = PivotUnitMode.Normalized;
+        static PivotUnitMode pivotUnitMode
+        {
+            get => SpriteFrameModulePersistentState.instance.pivotUnitMode;
+            set => SpriteFrameModulePersistentState.instance.pivotUnitMode = value;
+        }
 
         protected SpriteFrameModuleBase(string name, ISpriteEditor sw, IEventSystem es, IUndoSystem us, IAssetDatabase ad)
         {
@@ -448,7 +458,7 @@ namespace UnityEditor.U2D.Sprites
         {
             get
             {
-                return m_PivotUnitMode == PivotUnitMode.Pixels
+                return pivotUnitMode == PivotUnitMode.Pixels
                     ? ConvertFromNormalizedToRectSpace(selectedSpritePivot, selectedSpriteRect)
                     : selectedSpritePivot;
             }

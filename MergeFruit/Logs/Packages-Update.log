@@ -54,3 +54,22 @@ The following packages were added:
   com.unity.2d.animation@5.0.9
   com.unity.2d.sprite@1.0.0
   com.unity.2d.spriteshape@5.1.5
+
+=== Wed Oct 25 21:13:53 2023
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were added:
+  com.unity.ai.navigation@1.1.5
+The following packages were updated:
+  com.unity.2d.animation from version 5.0.9 to 9.0.4
+  com.unity.2d.spriteshape from version 5.1.5 to 9.0.2
+  com.unity.addressables from version 1.19.19 to 1.21.18
+  com.unity.collab-proxy from version 1.15.16 to 2.1.0
+  com.unity.feature.2d from version 1.0.0 to 2.0.0
+  com.unity.ide.rider from version 3.0.13 to 3.0.25
+  com.unity.ide.visualstudio from version 2.0.14 to 2.0.21
+  com.unity.test-framework from version 1.1.31 to 1.1.33
+  com.unity.timeline from version 1.6.4 to 1.7.5
+  com.unity.visualscripting from version 1.7.6 to 1.9.1

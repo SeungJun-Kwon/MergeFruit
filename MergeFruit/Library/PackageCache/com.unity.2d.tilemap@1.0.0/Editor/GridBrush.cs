@@ -177,7 +177,6 @@ namespace UnityEditor.Tilemaps
             if (map == null)
                 return;
 
-            int count = 0;
             var identity = Matrix4x4.identity;
             var listSize = Math.Abs(position.size.x * position.size.y * position.size.z);
             if (m_TileChangeDataList == null || m_TileChangeDataList.Capacity != listSize)
@@ -540,6 +539,7 @@ namespace UnityEditor.Tilemaps
 
         /// <summary>Gets the index to the GridBrush::ref::BrushCell based on the position of the BrushCell.</summary>
         /// <param name="brushPosition">Position of the BrushCell.</param>
+        /// <returns>The index to the GridBrush::ref::BrushCell.</returns>
         public int GetCellIndex(Vector3Int brushPosition)
         {
             return GetCellIndex(brushPosition.x, brushPosition.y, brushPosition.z);
@@ -549,6 +549,7 @@ namespace UnityEditor.Tilemaps
         /// <param name="x">X Position of the BrushCell.</param>
         /// <param name="y">Y Position of the BrushCell.</param>
         /// <param name="z">Z Position of the BrushCell.</param>
+        /// <returns>The index to the GridBrush::ref::BrushCell.</returns>
         public int GetCellIndex(int x, int y, int z)
         {
             return x + m_Size.x * y + m_Size.x * m_Size.y * z;
@@ -561,6 +562,7 @@ namespace UnityEditor.Tilemaps
         /// <param name="sizex">X Size of Brush.</param>
         /// <param name="sizey">Y Size of Brush.</param>
         /// <param name="sizez">Z Size of Brush.</param>
+        /// <returns>The index to the GridBrush::ref::BrushCell.</returns>
         public int GetCellIndex(int x, int y, int z, int sizex, int sizey, int sizez)
         {
             return x + sizex * y + sizex * sizey * z;
@@ -570,7 +572,7 @@ namespace UnityEditor.Tilemaps
         /// <param name="x">X Position of the BrushCell.</param>
         /// <param name="y">Y Position of the BrushCell.</param>
         /// <param name="z">Z Position of the BrushCell.</param>
-        /// <returns>Index to the BrushCell.</returns>
+        /// <returns>The index to the GridBrush::ref::BrushCell.</returns>
         public int GetCellIndexWrapAround(int x, int y, int z)
         {
             return (x % m_Size.x) + m_Size.x * (y % m_Size.y) + m_Size.x * m_Size.y * (z % m_Size.z);
@@ -599,6 +601,10 @@ namespace UnityEditor.Tilemaps
             }
         }
 
+        /// <summary>
+        /// Returns a HashCode for the GridBrush based on its contents.
+        /// </summary>
+        /// <returns>A HashCode for the GridBrush based on its contents.</returns>
         public override int GetHashCode()
         {
             int hash = 0;
@@ -627,6 +633,10 @@ namespace UnityEditor.Tilemaps
             [SerializeField] Matrix4x4 m_Matrix = Matrix4x4.identity;
             [SerializeField] private Color m_Color = Color.white;
 
+            /// <summary>
+            /// Returns a HashCode for the BrushCell based on its contents.
+            /// </summary>
+            /// <returns>A HashCode for the BrushCell based on its contents.</returns>
             public override int GetHashCode()
             {
                 int hash;
