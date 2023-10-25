@@ -1,0 +1,74 @@
+{
+  "fruit": [
+    {
+      "_fruitId": "0",
+      "_fruitName": "딸기",
+      "_fruitSize": "1",
+      "_fruitScore": "2",
+      "_fruitSprite": "strawberry"
+    },
+    {
+      "_fruitId": "1",
+      "_fruitName": "블루베리",
+      "_fruitSize": "1.1",
+      "_fruitScore": "5",
+      "_fruitSprite": "blueberry"
+    },
+    {
+      "_fruitId": "2",
+      "_fruitName": "오렌지",
+      "_fruitSize": "1.2",
+      "_fruitScore": "10",
+      "_fruitSprite": "orange"
+    },
+    {
+      "_fruitId": "3",
+      "_fruitName": "레몬",
+      "_fruitSize": "1.5",
+      "_fruitScore": "15",
+      "_fruitSprite": "lemon"
+    },
+    {
+      "_fruitId": "4",
+      "_fruitName": "토마토",
+      "_fruitSize": "2",
+      "_fruitScore": "20",
+      "_fruitSprite": "tomato"
+    },
+    {
+      "_fruitId": "5",
+      "_fruitName": "복숭아",
+      "_fruitSize": "2.5",
+      "_fruitScore": "30",
+      "_fruitSprite": "peach"
+    },
+    {
+      "_fruitId": "6",
+      "_fruitName": "사과",
+      "_fruitSize": "3",
+      "_fruitScore": "40",
+      "_fruitSprite": "apple"
+    },
+    {
+      "_fruitId": "7",
+      "_fruitName": "포도",
+      "_fruitSize": "4",
+      "_fruitScore": "80",
+      "_fruitSprite": "grape"
+    },
+    {
+      "_fruitId": "8",
+      "_fruitName": "배",
+      "_fruitSize": "5",
+      "_fruitScore": "160",
+      "_fruitSprite": "pear"
+    },
+    {
+      "_fruitId": "9",
+      "_fruitName": "수박",
+      "_fruitSize": "6.5",
+      "_fruitScore": "320",
+      "_fruitSprite": "watermelon"
+    }
+  ]
+}
