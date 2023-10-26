@@ -22,41 +22,49 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Audio
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f6fa03999a0597a4fa8cdf6619791c13
     m_Address: Assets/Audios/Button.wav
     m_ReadOnly: 0
     m_SerializedLabels:
     - Audio
-  - m_GUID: d74cd6c6b6d71844b900c3a5dbc6d737
-    m_Address: Assets/Audios/BGM.wav
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e48122580c4d8fa459d1d27b6d663443
+    m_Address: Assets/Audios/BGM.mp3
     m_ReadOnly: 0
     m_SerializedLabels:
     - Audio
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 060849e23d9d5524c8d02a07b7907caf
     m_Address: Assets/Audios/Merge.ogg
     m_ReadOnly: 0
     m_SerializedLabels:
     - Audio
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 05a9083b4cbdc4a489b5e5dce5bedafe
     m_Address: Assets/Audios/LevelUp B.wav
     m_ReadOnly: 0
     m_SerializedLabels:
     - Audio
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 54bb227848e577847b3125314feed77f
     m_Address: Assets/Audios/LevelUp A.wav
     m_ReadOnly: 0
     m_SerializedLabels:
     - Audio
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f07ead962d4b7e847bb7ba9976870ce9
     m_Address: Assets/Audios/Attach.wav
     m_ReadOnly: 0
     m_SerializedLabels:
     - Audio
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 728cd15ec8532774cbb981fe64a6d9f8
     m_Address: Assets/Audios/LevelUp C.wav
     m_ReadOnly: 0
     m_SerializedLabels:
     - Audio
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bc37cb9e800fdbe4782aa9a3320e8a77, type: 2}
   m_SchemaSet:

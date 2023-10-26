@@ -24,7 +24,7 @@ public class Fruit : MonoBehaviour
             transform.localScale = Vector3.one * _fruitData._fruitSize;
 
             _spriteRenderer.sprite = FruitManager.Instance._fruitSprites[_fruitData._fruitName];
-            _spriteRenderer.sortingOrder = FruitManager.Instance._fruitDatas.fruit.Length - _fruitData._fruitId;
+            _spriteRenderer.sortingOrder = FruitManager.Instance._fruitDatas.fruit.Count - _fruitData._fruitId;
         }
     }
     FruitData _fruitData;
@@ -71,7 +71,7 @@ public class Fruit : MonoBehaviour
 
     void MergeFruit(Fruit fruit)
     {
-        if (FruitData._fruitId < FruitManager.Instance._fruitDatas.fruit.Length - 1 && (FruitData._fruitId == fruit.FruitData._fruitId))
+        if (FruitData._fruitId < FruitManager.Instance._fruitDatas.fruit.Count - 1 && (FruitData._fruitId == fruit.FruitData._fruitId))
         {
             Vector3 myPos = transform.position;
             Vector3 otherPos = fruit.transform.position;
@@ -84,7 +84,7 @@ public class Fruit : MonoBehaviour
                 if (GameManager.Instance != null)
                     GameManager.Instance.Score += FruitData._fruitScore;
 
-                if (FruitData._fruitId < FruitManager.Instance._fruitDatas.fruit.Length - 1)
+                if (FruitData._fruitId < FruitManager.Instance._fruitDatas.fruit.Count - 1)
                     FruitData = FruitManager.Instance._fruitDatas.fruit[FruitData._fruitId + 1];
 
                 GameManager.Instance.PlayMergeSound();

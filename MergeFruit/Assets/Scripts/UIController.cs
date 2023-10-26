@@ -25,11 +25,11 @@ public class UIController : MonoBehaviour
     [Space]
     [SerializeField] Transform _arrow;
 
-    float _xLimit = 2f;
-
     bool _leftDown = false, _rightDown = false;
 
     float _arrowSpeed = 0.1f;
+    float _spawnDelay = 0.5f;
+    float _xLimit = 2f;
 
     private void Awake()
     {
@@ -75,14 +75,14 @@ public class UIController : MonoBehaviour
     {
         FruitSpawner.Instance.SpawnFruit(_arrow.position.x);
 
-        StartCoroutine(SpawnTermCor());
+        StartCoroutine(SpawnDelayCor());
     }
 
-    IEnumerator SpawnTermCor()
+    IEnumerator SpawnDelayCor()
     {
         _spawnButton.interactable = false;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(_spawnDelay);
 
         _spawnButton.interactable = true;
     }
@@ -125,7 +125,7 @@ public class UIController : MonoBehaviour
     {
         GameManager.Instance.Restart();
         _arrow.position = new Vector3(0f, _arrow.position.y, 1f);
-        StopCoroutine(SpawnTermCor());
+        StopCoroutine(SpawnDelayCor());
         _spawnButton.interactable = true;
     }
 
