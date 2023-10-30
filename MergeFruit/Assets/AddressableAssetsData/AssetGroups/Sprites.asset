@@ -22,73 +22,61 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprite
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e3bad5eee40e1e44086f942b83519c58
     m_Address: Assets/Sprites/Fruits/peach.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprite
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 140169fe467b8b649aa2541e0c8d6c09
     m_Address: Assets/Sprites/Fruits/strawberry.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprite
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 50dd2e8acaa7426438d693e39eb73026
     m_Address: Assets/Sprites/Fruits/pear.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprite
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5b0c287fddf11b24d910a6b285ee1807
     m_Address: Assets/Sprites/Fruits/orange.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprite
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fbb6c45b2e0f5424cace793121f03e56
     m_Address: Assets/Sprites/Fruits/grape.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprite
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 23c39604c54f9f944ac7791b186f3dce
     m_Address: Assets/Sprites/Fruits/blueberry.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprite
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cc11d6a9ba2896d4f824776344546f5d
     m_Address: Assets/Sprites/TitleBackground.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprite
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c6609f761ef0e154e9e0284606deede0
     m_Address: Assets/Sprites/Icon.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprite
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b7481a4c424715542a70ac1efc7468db
     m_Address: Assets/Sprites/Fruits/apple.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprite
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 467dd858ecc6a4740894a1e6ea1e7c30
     m_Address: Assets/Sprites/Fruits/tomato.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprite
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2b22032e05cdf724bb89c4bf8d054ded
     m_Address: Assets/Sprites/Fruits/lemon.png
     m_ReadOnly: 0
     m_SerializedLabels:
     - Sprite
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: bc37cb9e800fdbe4782aa9a3320e8a77, type: 2}
   m_SchemaSet:

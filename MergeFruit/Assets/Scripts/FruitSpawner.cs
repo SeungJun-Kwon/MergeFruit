@@ -70,7 +70,7 @@ public class FruitSpawner : MonoBehaviour
             }
         }
 
-        NextIndex = Random.Range(0, FruitManager.Instance._fruitDatas.fruit.Count / 2);
+        NextIndex = Random.Range(0, FruitManager.Instance._fruitDatas.fruit.Length / 2);
     }
 
     public void HideFruit(Fruit fruit)
