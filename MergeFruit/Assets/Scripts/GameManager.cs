@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        PlayGameOverSound();
+        PlaySFX("GameOver");
         UIController.Instance.SetActiveGameOver(true);
     }
 
@@ -86,9 +86,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void PlayMergeSound() => PlaySFX(_sfxClip["Merge"]);
-
-    public void PlayGameOverSound() => PlaySFX(_sfxClip["GameOver"]);
+    public void PlaySFX(string name)
+    {
+        if (_sfxClip.TryGetValue(name, out var clip))
+            PlaySFX(clip);
+    }
 
     public void SetVolume(float volume)
     {

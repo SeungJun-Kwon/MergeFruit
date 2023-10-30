@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AddressableAssetSettings
   m_EditorClassIdentifier: 
   m_DefaultGroup: 67866aef2732e6847be906804da1c12a
-  m_CachedHash:
+  m_currentHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
@@ -32,11 +32,14 @@ MonoBehaviour:
   m_ShaderBundleNaming: 0
   m_ShaderBundleCustomNaming: 
   m_MonoScriptBundleNaming: 0
+  m_CheckForContentUpdateRestrictionsOption: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
     m_Id: 
   m_RemoteCatalogLoadPath:
     m_Id: 
+  m_ContentStateBuildPathProfileVariableName: 
+  m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: 
@@ -45,7 +48,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fb97230da6f08474bba358a10f2d783d, type: 2}
   - {fileID: 11400000, guid: 15880aeabaec1bd4ea194736f1f9b325, type: 2}
   - {fileID: 11400000, guid: d6fbfbf0910f902488e897da5c3dbb78, type: 2}
-  - {fileID: 11400000, guid: c06627d6c2dc3c448bb271e485fd6bec, type: 2}
   - {fileID: 11400000, guid: 23282ff9560b90042a51c255a8cccf26, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
@@ -111,3 +113,4 @@ MonoBehaviour:
     m_Settings: {fileID: 11400000}
     m_NextInstanceId: 0
     m_RegisteredServiceTypeRefs: []
+    m_PingTimeoutInMilliseconds: 5000
