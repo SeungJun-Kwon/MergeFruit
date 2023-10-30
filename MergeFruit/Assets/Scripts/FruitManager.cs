@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class FruitManager : MonoBehaviour
 {
@@ -13,9 +12,7 @@ public class FruitManager : MonoBehaviour
 
     [SerializeField] TextAsset _fruitJson;
 
-    const string _fruitURL = "https://docs.google.com/spreadsheets/d/1bWqXHogVMaGZO2mmRIAXUMd3ihiSycEadH4lG1m89yw/export?format=tsv&range=A2:E";
-
-    private IEnumerator Start()
+    private async void Awake()
     {
         if (Instance == null)
         {
@@ -25,44 +22,30 @@ public class FruitManager : MonoBehaviour
         else if (Instance != this)
             Destroy(this);
 
-        UnityWebRequest www = UnityWebRequest.Get(_fruitURL);
-        yield return www.SendWebRequest();
+        var operation = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<TextAsset>("Assets/Jsons/fruit.json");
+        await operation.Task;
 
-        string data = www.downloadHandler.text;
-
-        string[] row = data.Split('\n');
-        int rowSize = row.Length;
-
-        for (int i = 0; i < rowSize; i++)
+        operation.Completed += result =>
         {
-            string[] column = row[i].Split('\t');
+            _fruitJson = result.Result;
+            _fruitDatas = JsonUtility.FromJson<FruitDatas>(_fruitJson.text);
 
-            FruitData fruitData = new();
-            fruitData._fruitId = int.Parse(column[0]);
-            fruitData._fruitName = column[1];
-            fruitData._fruitSize = float.Parse(column[2]);
-            fruitData._fruitScore = int.Parse(column[3]);
-            fruitData._fruitSprite = column[4].Trim();
-
-            _fruitDatas.fruit.Add(fruitData);
-        }
-
-        foreach(var f in _fruitDatas.fruit)
-        {
-            print(f.ToString());
-
-            UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<Sprite>($"Assets/Sprites/Fruits/{f._fruitSprite}.png").Completed += result =>
+            foreach (var f in _fruitDatas.fruit)
             {
-                _fruitSprites.Add(f._fruitName, result.Result);
-            };
-        }
+                string path = $"Assets/Sprites/Fruits/{f._fruitSprite}.png";
+                UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<Sprite>(path).Completed += result =>
+                {
+                    _fruitSprites.Add(f._fruitName, result.Result);
+                };
+            }
+        };
     }
 }
 
 [System.Serializable]
 public class FruitDatas
 {
-    public List<FruitData> fruit;
+    public FruitData[] fruit;
 }
 
 [System.Serializable]
