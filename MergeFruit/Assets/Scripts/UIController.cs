@@ -16,6 +16,7 @@ public class UIController : MonoBehaviour
     [SerializeField] Image _nextFruitImage;
     [SerializeField] TMP_Text _scoreText;
     [SerializeField] TMP_Text _timerText;
+    [SerializeField] CustomButton _menuButton;
 
     [Header("Lower")]
     [SerializeField] Button _leftButton;
@@ -90,17 +91,12 @@ public class UIController : MonoBehaviour
     public void SetActiveMenu(bool value)
     {
         if(value)
-        {
-            Time.timeScale = 0;
             _menu.SetActive(true);
-        }
         else
-        {
-            Time.timeScale = 1;
             _menu.SetActive(false);
-        }
 
         _spawnButton.interactable = !value;
+        _menuButton.interactable = !value;
     }
 
     public void SetActiveGameOver(bool value)

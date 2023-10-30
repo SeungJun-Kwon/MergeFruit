@@ -29,8 +29,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - Audio
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e48122580c4d8fa459d1d27b6d663443
-    m_Address: Assets/Audios/BGM.mp3
+  - m_GUID: d74cd6c6b6d71844b900c3a5dbc6d737
+    m_Address: Assets/Audios/BGM.wav
     m_ReadOnly: 0
     m_SerializedLabels:
     - Audio
