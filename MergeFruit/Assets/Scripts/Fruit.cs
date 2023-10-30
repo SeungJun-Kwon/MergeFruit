@@ -87,7 +87,7 @@ public class Fruit : MonoBehaviour
                 if (FruitData._fruitId < FruitManager.Instance._fruitDatas.fruit.Length - 1)
                     FruitData = FruitManager.Instance._fruitDatas.fruit[FruitData._fruitId + 1];
 
-                GameManager.Instance.PlayMergeSound();
+                GameManager.Instance.PlaySFX("Merge");
             }
         }
     }
