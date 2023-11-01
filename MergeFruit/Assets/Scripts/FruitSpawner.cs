@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class FruitSpawner : MonoBehaviour
+public class FruitSpawner : ObjectPooling<Fruit>
 {
     public static FruitSpawner Instance;
 
-    public AssetReference _spawnObject;
-    public GameObject _spawnGO;
-
-    List<Fruit> _fruits = new();
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+            Destroy(this);
+    }
 
     int NextIndex
     {
@@ -30,14 +33,6 @@ public class FruitSpawner : MonoBehaviour
     }
     int _nextIndex;
 
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-        else if (Instance != this)
-            Destroy(this);
-    }
-
     private void Start()
     {
         _nextIndex = 0;
@@ -48,62 +43,38 @@ public class FruitSpawner : MonoBehaviour
 
     }
 
-    public async void SpawnFruit(float xPos)
+    public async void SpawnFruit()
     {
-        int index = FindDisabledObject();
-        if (index >= 0)
-        {
-            _fruits[index].gameObject.SetActive(true);
-            _fruits[index].FruitData = FruitManager.Instance._fruitDatas.fruit[_nextIndex];
-            _fruits[index].transform.position = new Vector3(xPos, 3.25f, 0);
-        }
-        else
-        {
-            var operation = _spawnObject.InstantiateAsync(new Vector3(xPos, 3.25f, 0), Quaternion.identity);
-            await operation.Task; // 비동기 작업이 완료될 때까지 대기하기 위해 .Task를 사용
+        var result = await base.SpawnObject();
 
-            if (operation.Result.gameObject.TryGetComponent(out Fruit fruit))
-            {
-                fruit.FruitData = FruitManager.Instance._fruitDatas.fruit[_nextIndex];
-                fruit.transform.parent = transform;
-                _fruits.Add(fruit);
-            }
-        }
+        if (result == null)
+            return;
+
+        float xPos = UIController.Instance._arrow.position.x;
+
+        result.transform.position = new Vector3(xPos, 3.25f, 0);
+        result.FruitData = FruitManager.Instance._fruitDatas.fruit[_nextIndex];
+        result._available = true;
 
         NextIndex = Random.Range(0, FruitManager.Instance._fruitDatas.fruit.Count / 2);
     }
 
-    public void HideFruit(Fruit fruit)
+    public void MergeFruit(Fruit a, Fruit b)
     {
-        foreach(var f in _fruits)
-        {
-            if (f == fruit)
-                f.gameObject.SetActive(false);
-        }
-    }
+        if (GameManager.Instance != null)
+            GameManager.Instance.Score += a.FruitData._fruitScore;
 
-    public void HideAllFruit()
-    {
-        foreach (var f in _fruits)
-            f.gameObject.SetActive(false);
-    }
+        if (a.FruitData._fruitId < FruitManager.Instance._fruitDatas.fruit.Count - 1)
+            a.FruitData = FruitManager.Instance._fruitDatas.fruit[a.FruitData._fruitId + 1];
 
-    private int FindDisabledObject()
-    {
-        int result = -1;
+        HideObject(a);
+        HideObject(b);
 
-        if (_fruits.Count < 1)
-            return result;
+        a.gameObject.SetActive(true);
+        a.StartMergeAnim();
 
-        for(int i = 0; i < _fruits.Count; i++)
-        {
-            if(!_fruits[i].gameObject.activeSelf)
-            {
-                result = i;
-                break;
-            }
-        }
+        GameManager.Instance.PlaySFX("Merge");
 
-        return result;
+        EffectSpawner.Instance.MergeEffect(a.transform.position, a.FruitData._fruitSize);
     }
 }

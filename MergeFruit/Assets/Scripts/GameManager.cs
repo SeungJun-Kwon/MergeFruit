@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
-        FruitSpawner.Instance.HideAllFruit();
+        FruitSpawner.Instance.HideAllObjects();
         Score = 0;
         _totalSeconds = 0f;
     }
