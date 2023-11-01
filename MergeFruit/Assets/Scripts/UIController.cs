@@ -24,7 +24,7 @@ public class UIController : MonoBehaviour
     [SerializeField] Button _spawnButton;
 
     [Space]
-    [SerializeField] Transform _arrow;
+    [SerializeField] public Transform _arrow;
 
     float _xLimit = 2f;
 
@@ -74,7 +74,7 @@ public class UIController : MonoBehaviour
 
     public void SpawnButton()
     {
-        FruitSpawner.Instance.SpawnFruit(_arrow.position.x);
+        FruitSpawner.Instance.SpawnFruit();
 
         StartCoroutine(SpawnTermCor());
     }
