@@ -24,13 +24,14 @@ public class UIController : MonoBehaviour
     [SerializeField] Button _spawnButton;
 
     [Space]
-    [SerializeField] Transform _arrow;
+    [SerializeField] public Transform _arrow;
 
     float _xLimit = 2f;
 
     bool _leftDown = false, _rightDown = false;
 
     float _arrowSpeed = 0.1f;
+    float _spawnTerm = 0.5f;
 
     private void Awake()
     {
@@ -74,7 +75,7 @@ public class UIController : MonoBehaviour
 
     public void SpawnButton()
     {
-        FruitSpawner.Instance.SpawnFruit(_arrow.position.x);
+        FruitSpawner.Instance.SpawnFruit();
 
         StartCoroutine(SpawnTermCor());
     }
@@ -83,7 +84,7 @@ public class UIController : MonoBehaviour
     {
         _spawnButton.interactable = false;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(_spawnTerm);
 
         _spawnButton.interactable = true;
     }

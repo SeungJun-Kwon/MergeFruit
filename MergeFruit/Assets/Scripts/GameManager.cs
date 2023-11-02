@@ -102,14 +102,26 @@ public class GameManager : MonoBehaviour
 
     public void Restart()
     {
-        FruitSpawner.Instance.HideAllFruit();
+        FruitSpawner.Instance.HideAllObjects();
         Score = 0;
         _totalSeconds = 0f;
     }
 
-    public void StartGame() => UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+    public void StartGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
 
-    public void ExitGame() => UnityEngine.SceneManagement.SceneManager.LoadScene("TitleScene");
+        Score = 0;
+        _totalSeconds = 0f;
+    }
+
+    public void ExitGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("TitleScene");
+
+        Score = 0;
+        _totalSeconds = 0f;
+    }
 
     public void ExitApp()
 
