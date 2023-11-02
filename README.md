@@ -5,4 +5,4 @@
 https://play.google.com/store/apps/details?id=com.DAchoMI.MergeFruit
 
 ## Play Video
-https://youtu.be/nsdbcsqjiW0
+[![실행영상](https://img.youtube.com/vi/nsdbcsqjiW0/0.jpg)](https://www.youtube.com/watch?v=nsdbcsqjiW0)
