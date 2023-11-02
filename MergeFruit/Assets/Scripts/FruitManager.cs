@@ -11,11 +11,9 @@ public class FruitManager : MonoBehaviour
 
     public Dictionary<string, Sprite> _fruitSprites = new();
 
-    [SerializeField] TextAsset _fruitJson;
+    const string _fruitURL = "https://script.google.com/macros/s/AKfycby-IJILHDTM5CVoxU9d3QWnuvPL5VJmeZx1aTojeNxyG2vhEiQl8c4iMjTlmDDjiouu/exec";
 
-    const string _fruitURL = "https://docs.google.com/spreadsheets/d/1bWqXHogVMaGZO2mmRIAXUMd3ihiSycEadH4lG1m89yw/export?format=tsv&range=A2:E";
-
-    private IEnumerator Start()
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -24,35 +22,38 @@ public class FruitManager : MonoBehaviour
         }
         else if (Instance != this)
             Destroy(this);
+    }
 
-        UnityWebRequest www = UnityWebRequest.Get(_fruitURL);
-        yield return www.SendWebRequest();
+    private IEnumerator Start()
+    {
+        TitleUIController.Instance.StartLoading();
 
-        string data = www.downloadHandler.text;
-
-        string[] row = data.Split('\n');
-        int rowSize = row.Length;
-
-        for (int i = 0; i < rowSize; i++)
+        using (UnityWebRequest w = UnityWebRequest.Get(_fruitURL))
         {
-            string[] column = row[i].Split('\t');
+            yield return w.SendWebRequest();
 
-            FruitData fruitData = new();
-            fruitData._fruitId = int.Parse(column[0]);
-            fruitData._fruitName = column[1];
-            fruitData._fruitSize = float.Parse(column[2]);
-            fruitData._fruitScore = int.Parse(column[3]);
-            fruitData._fruitSprite = column[4].Trim();
-
-            _fruitDatas.fruit.Add(fruitData);
-        }
-
-        foreach (var f in _fruitDatas.fruit)
-        {
-            UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<Sprite>($"Assets/Sprites/Fruits/{f._fruitSprite}.png").Completed += result =>
+            if (w.isDone)
             {
-                _fruitSprites.Add(f._fruitName, result.Result);
-            };
+                string jsonData = w.downloadHandler.text;
+                jsonData = "{\"fruit\":" + jsonData + "}";
+
+                _fruitDatas = JsonUtility.FromJson<FruitDatas>(jsonData);
+
+                foreach (var f in _fruitDatas.fruit)
+                {
+                    var op = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<Sprite>($"Assets/Sprites/Fruits/{f._fruitSprite}.png");
+                    yield return op;
+
+                    if (op.IsDone)
+                        _fruitSprites.Add(f._fruitName, op.Result);
+                }
+
+                TitleUIController.Instance.CompleteLoadingData();
+            }
+            else
+            {
+                TitleUIController.Instance.FailLoadingData();
+            }
         }
     }
 }

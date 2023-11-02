@@ -31,6 +31,7 @@ public class UIController : MonoBehaviour
     bool _leftDown = false, _rightDown = false;
 
     float _arrowSpeed = 0.1f;
+    float _spawnTerm = 0.5f;
 
     private void Awake()
     {
@@ -83,7 +84,7 @@ public class UIController : MonoBehaviour
     {
         _spawnButton.interactable = false;
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(_spawnTerm);
 
         _spawnButton.interactable = true;
     }
